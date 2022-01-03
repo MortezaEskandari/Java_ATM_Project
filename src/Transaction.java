@@ -61,5 +61,23 @@ public class Transaction {
 		// set the memo
 		this.memo = memo;
 	}
-
+	
+	public void printTransaction() {
+		
+	}
+	
+	public double getAmount() {
+		return this.amount;
+	}
+	
+	public String getType() {
+		return this.type;
+	}
+	
+	public String getMemo() {
+		return this.memo;
+	}
+	public double getOldBalance() {
+		return this.oldBalance;
+	}
 }
