@@ -63,7 +63,18 @@ public class Transaction {
 	}
 	
 	public void printTransaction() {
-		
+		if(this.type == "withdraw") {
+			
+		}
+		else if(this.type == "deposit") {
+			
+		}
+		else if(this.type == "transfer") {
+			
+		}
+		else {
+			System.out.println("Transaction 'type' was not any of the following: withdraw, deposit, transfer.");
+		}
 	}
 	
 	public double getAmount() {

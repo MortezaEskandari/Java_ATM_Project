@@ -82,10 +82,10 @@ public class Account {
 		// add new transaction made to list of transactions
 		Transaction trans;
 		if(memo != "") { // if user wants to add memo
-			trans = new Transaction("Withdraw", memo, withdrawAmount, oldBalance, this);
+			trans = new Transaction("withdraw", memo, withdrawAmount, oldBalance, this);
 		}
 		else { // else user didn't want to add memo
-			trans = new Transaction("Withdraw", withdrawAmount, oldBalance, this);
+			trans = new Transaction("withdraw", withdrawAmount, oldBalance, this);
 		}
 		this.transactions.add(trans);
 	} //
