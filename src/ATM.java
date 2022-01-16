@@ -203,7 +203,7 @@ public class ATM {
 		do {
 			System.out.printf("Welcome to %s Bank %s, what would you like to do?\n", bankName, user.getName());
 			System.out.println(" 1) Show account transaction history.");
-			System.out.println(" 2) Withdrawl.");
+			System.out.println(" 2) Withdraw.");
 			System.out.println(" 3) Deposit.");
 			System.out.println(" 4) Transfer.");
 			System.out.println(" 5) Logout.");

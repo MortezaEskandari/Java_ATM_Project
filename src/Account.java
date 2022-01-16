@@ -70,11 +70,11 @@ public class Account {
 		double withdrawAmount;
 		do {			
 			this.getSummary();
-			System.out.println("Enter amount you want to withdrawl: ");
+			System.out.println("Enter amount you want to withdraw: ");
 			withdrawAmount = scanner.nextDouble();
 			
 			if(withdrawAmount > this.balance || withdrawAmount < 0) {
-				System.out.println("Withdrawl amount exceeds the account balance or you entered an invalid amount.");
+				System.out.println("Withdraw amount exceeds the account balance or you entered an invalid amount.");
 			}
 		} while(withdrawAmount > this.balance || withdrawAmount < 0);
 		
