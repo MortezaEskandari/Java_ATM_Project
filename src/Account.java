@@ -56,6 +56,11 @@ public class Account {
 		this.transactions = new ArrayList<Transaction>();
 	}
 	
+	/**
+	 * Method called by the User class to perform the withdraw from this account
+	 * After the withdraw is made, add this withdraw into the list of transactions made for this account
+	 * @param scanner
+	 */
 	public void withdraw(Scanner scanner) {
 		
 		// see if the User wants to add a memo, returning an empty String "" means they didn't want a memo
@@ -82,13 +87,52 @@ public class Account {
 		// add new transaction made to list of transactions
 		Transaction trans;
 		if(memo != "") { // if user wants to add memo
-			trans = new Transaction("withdraw", memo, withdrawAmount, oldBalance, this);
+			trans = new Transaction("withdraw", memo, withdrawAmount, oldBalance, this.balance, this);
 		}
 		else { // else user didn't want to add memo
-			trans = new Transaction("withdraw", withdrawAmount, oldBalance, this);
+			trans = new Transaction("withdraw", withdrawAmount, oldBalance, this.balance, this);
 		}
 		this.transactions.add(trans);
-	} //
+	}
+	
+	/**
+	 * Method called by the User class to perform the deposit onto this account
+	 * After the deposit is made, add this deposit into the list of transactions made for this account
+	 * @param scanner
+	 */
+	public void deposit(Scanner scanner) {
+		
+		// see if the User wants to add a memo, returning an empty String "" means they didn't want a memo
+		String memo = getMemo(scanner);
+		
+		// ask User the amount they want to deposit
+		double depositAmount;
+		do {			
+			this.getSummary();
+			System.out.println("Enter amount you want to deposit: ");
+			depositAmount = scanner.nextDouble();
+			
+			if(depositAmount <= 0) {
+				System.out.println("Deposit amount entered is either a negative amount or 0, please enter a positive value greater than 0.");
+			}
+		} while(depositAmount <= 0);
+		
+		// process the withdraw
+		double oldBalance = this.balance;
+		this.balance += depositAmount;
+		System.out.printf("You have successfully deposited: $%.2f\n", depositAmount);
+		System.out.printf("Your new balance is now: $%.2f\n", this.balance);
+		
+		// add new transaction made to list of transactions
+		Transaction trans;
+		if(memo != "") { // if user wants to add memo
+			trans = new Transaction("deposit", memo, depositAmount, oldBalance, this.balance, this);
+		}
+		else { // else user didn't want to add memo
+			trans = new Transaction("deposit", depositAmount, oldBalance, this.balance, this);
+		}
+		this.transactions.add(trans);
+	}
 	
 	/**
 	 * Asks the user if they want to add a memo for their transaction, returns empty String if they chose not to add a memo, else returns the memo
@@ -117,6 +161,17 @@ public class Account {
 		}
 		
 		return memo;
+	}
+	
+	/**
+	 * Prints transaction history for this account, called from User class showTransHistory() method
+	 */
+	public void printTransactions() {
+		
+		System.out.printf("Transaction history for %s account:\n", this.name);
+		for(int t = 0; t < this.transactions.size(); t++) {
+			this.transactions.get(t).printTransaction();
+		}
 	}
 	
 	/**

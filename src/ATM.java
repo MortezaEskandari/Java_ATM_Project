@@ -226,16 +226,16 @@ public class ATM {
 		switch(choice) {
 		
 		case 1:
-			showTransHistory(user, scanner);
+			user.showTransHistory(scanner);
 			break;
 		case 2:
 			user.withdrawFunds(scanner);
 			break;
 		case 3:
-			depositFunds(user, scanner);
+			user.depositFunds(scanner);
 			break;
 		case 4:
-			transferFunds(user, scanner);
+			user.transferFunds(scanner);
 			break;
 		case 5:
 			System.out.println("Logging out...");

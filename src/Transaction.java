@@ -32,12 +32,17 @@ public class Transaction {
 	 */
 	private double oldBalance;
 	
+	/*
+	 * Old balance of the account before the transaction was made.
+	 */
+	private double newBalance;
+	
 	/**
 	 * Constructor class: generates a transaction without a memo
 	 * @param amount
 	 * @param account
 	 */
-	public Transaction(String type, double amount, double oldBalance, Account account) {
+	public Transaction(String type, double amount, double oldBalance, double newBalance, Account account) {
 		
 		this.type = type;
 		this.amount = amount;
@@ -45,6 +50,7 @@ public class Transaction {
 		this.timestamp = new Date();
 		this.memo = "";
 		this.oldBalance = oldBalance;
+		this.newBalance = newBalance;
 	}
 	
 	/**
@@ -53,28 +59,22 @@ public class Transaction {
 	 * @param memo
 	 * @param account
 	 */
-	public Transaction(String type, String memo, double amount, double oldBalance, Account account) {
+	public Transaction(String type, String memo, double amount, double oldBalance, double newBalance, Account account) {
 		
 		// call the 4 argument constructor first
-		this(type,amount,oldBalance,account);
+		this(type, amount, oldBalance, newBalance, account);
 		
 		// set the memo
 		this.memo = memo;
 	}
 	
 	public void printTransaction() {
-		if(this.type == "withdraw") {
-			
-		}
-		else if(this.type == "deposit") {
-			
-		}
-		else if(this.type == "transfer") {
-			
-		}
-		else {
-			System.out.println("Transaction 'type' was not any of the following: withdraw, deposit, transfer.");
-		}
+		System.out.printf("Time of transaction: %s\n", this.timestamp.toString());
+		System.out.printf("Type of transaction: %s\n", this.type);
+		System.out.printf("Transaction amount: %.02f\n", this.amount);
+		System.out.printf("Balance BEFORE transaction: %.02f\n", this.oldBalance);
+		System.out.printf("Balance AFTER transaction: %.02f\n", this.newBalance);
+		System.out.println("------------------------------------------------------------------------------------------");
 	}
 	
 	/**

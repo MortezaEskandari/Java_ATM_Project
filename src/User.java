@@ -113,6 +113,13 @@ public class User {
 		return false;
 	}
 	
+	/**
+	 * Method called from ATM.java class, user chose to make a withdraw
+	 * this method is used by the user to choose which account they want to withdraw from
+	 * after we got the account object we want to make a withdraw from
+	 * we call on the withdraw method from that account object to do the withdraw
+	 * @param scanner
+	 */
 	public void withdrawFunds(Scanner scanner) {
 		
 		String accountName;
@@ -126,9 +133,85 @@ public class User {
 			}
 		} while(!(this.hashAccounts.containsKey(accountName)));
 		
-		// process the withdrawl from the chosen account
+		// process the withdraw from the chosen account
 		Account acc = this.hashAccounts.get(accountName);
 		acc.withdraw(scanner);
+	}
+	
+	/**
+	 * Method called from ATM.java class, user chose to make a deposit
+	 * this method is used by the user to choose which account they want to deposit to
+	 * after we got the account object we want to make a deposit to
+	 * we call on the deposit method from that account object to do the withdraw
+	 * @param scanner
+	 */
+	public void depositFunds(Scanner scanner) {
+		
+		String accountName;
+		do {
+			System.out.println("Which account do you want to make a deposit to?: ");
+			accountName = scanner.nextLine();
+			
+			if(!(this.hashAccounts.containsKey(accountName))) {
+				System.out.println("This account doesn't exist. Please enter the name of one of the accounts you own.");
+				this.printAccountsSummary();
+			}
+		} while(!(this.hashAccounts.containsKey(accountName)));
+		
+		// process the withdraw from the chosen account
+		Account acc = this.hashAccounts.get(accountName);
+		acc.deposit(scanner);
+	}
+	
+	/**
+	 * Method called from ATM.java class, user chose to make a deposit
+	 * this method is used by the user to choose which account they want to deposit to
+	 * after we got the account object we want to make a deposit to
+	 * we call on the deposit method from that account object to do the withdraw
+	 * @param scanner
+	 */
+	public void transferFunds(Scanner scanner) {
+		
+		String accountName;
+		do {
+			System.out.println("Which account do you want to make a deposit to?: ");
+			accountName = scanner.nextLine();
+			
+			if(!(this.hashAccounts.containsKey(accountName))) {
+				System.out.println("This account doesn't exist. Please enter the name of one of the accounts you own.");
+				this.printAccountsSummary();
+			}
+		} while(!(this.hashAccounts.containsKey(accountName)));
+		
+		// process the withdraw from the chosen account
+		Account acc = this.hashAccounts.get(accountName);
+		acc.deposit(scanner);
+	}
+	
+	/**
+	 * Method called from ATM.java class, user chose to see transaction history
+	 * this method is used by the user to choose which account they want to see the transaction history of
+	 * after we got the account object we want to see the transaction history of
+	 * we call on the printTransactions method from that account object to print it to the screen
+	 * @param scanner
+	 */
+	public void showTransHistory(Scanner scanner) {
+		
+		// Ask user which account to show the transaction history of
+		String accountName;
+		do {
+			System.out.println("Which account do you want to see the transaction history of?: ");
+			accountName = scanner.nextLine();
+			
+			if(!(this.hashAccounts.containsKey(accountName))) {
+				System.out.println("This account doesn't exist. Please enter the name of one of the accounts you own.");
+				this.printAccountsSummary();
+			}
+		} while(!(this.hashAccounts.containsKey(accountName)));
+		
+		// display the transaction history for the chosen account
+		Account acc = this.hashAccounts.get(accountName);
+		acc.printTransactions();
 	}
 	
 	/**
@@ -154,7 +237,7 @@ public class User {
 		
 		System.out.printf("\n\n%s's accounts summary\n", this.firstName);
 		for(int a = 0; a < this.listAccounts.size(); a++) {
-			System.out.printf("%d) %s\n", this.listAccounts.get(a).getSummary());
+			System.out.printf("%d) %s\n", a+1, this.listAccounts.get(a).getSummary());
 		}
 		System.out.println();
 	}
