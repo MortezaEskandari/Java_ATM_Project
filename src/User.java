@@ -203,6 +203,8 @@ public class User {
 		
 		// Get the account object from the ArrayList of accounts that we want to transfer TO
 		Account accTransTo = this.hashAccounts.get(accNameTransTo);
+		
+		accTransFrom.transfer(scanner, accTransTo);
 	}
 	
 	/**

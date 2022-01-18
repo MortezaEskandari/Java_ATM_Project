@@ -135,6 +135,53 @@ public class Account {
 	}
 	
 	/**
+	 * Performs the actual transfer of money from this Account to the passed in Account (accTransTo)
+	 * Called from the User Class, transferFunds Method
+	 * @param scanner		Scanner object used to get user input
+	 * @param accTransTo	Account object we are transferring money TO from this Account
+	 */
+	public void transfer(Scanner scanner, Account accTransTo) {
+		
+		// see if the User wants to add a memo, returning an empty String "" means they didn't want a memo
+		String memo = getMemo(scanner);
+		
+		// ask User the amount they want to transfer
+		double transferAmount;
+		do {			
+			this.getSummary();
+			System.out.println("Enter amount you want to transfer: ");
+			transferAmount = scanner.nextDouble();
+			
+			if(transferAmount > this.balance || transferAmount < 0) {
+				System.out.println("Withdraw amount exceeds the account balance or you entered an invalid amount.");
+			}
+		} while(transferAmount > this.balance || transferAmount < 0);
+		
+		// process the transfer
+		double oldBalance = this.balance;
+		this.balance -= transferAmount;
+		accTransTo.transferDeposit(transferAmount); // this method will add the passed in balance to that accounts balance
+		
+		// Display user that the transfer was successful
+		System.out.printf("You have successfully transferred: $%.2f\n", transferAmount);
+		System.out.printf("Your new balance is now: $%.2f\n", this.balance);
+		
+		// add new transaction made to list of transactions
+		Transaction trans;
+		if(memo != "") { // if user wants to add memo
+			trans = new Transaction("transfer", memo, transferAmount, oldBalance, this.balance, this);
+		}
+		else { // else user didn't want to add memo
+			trans = new Transaction("transfer", transferAmount, oldBalance, this.balance, this);
+		}
+		this.transactions.add(trans);
+	}
+	
+	public void transferDeposit(Double amount) {
+		this.balance += amount;
+	}
+	
+	/**
 	 * Asks the user if they want to add a memo for their transaction, returns empty String if they chose not to add a memo, else returns the memo
 	 * @param scanner
 	 * @return String: the memo the user entered, or empty String if they chose not to enter a memo
