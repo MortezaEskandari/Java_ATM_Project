@@ -24,6 +24,7 @@ public class ATM {
 			System.out.println(" 2) Login to an existing bank account.");
 			System.out.println(" 3) Quit.");
 			option = scanner.nextInt();
+			scanner.nextLine(); // moves cursor to nextLine
 			
 			if(!(option >= 1 && option <= 3)) {
 				System.out.println("Invalid option. Please choose 1-3.");
@@ -140,6 +141,7 @@ public class ATM {
 							System.out.println(" 2) Choose a different Bank.");
 							System.out.println(" 3) Quit.");
 							option = scanner.nextInt();
+							scanner.nextLine(); // moves cursor to nextLine
 							
 							if(!(option >= 1 && option <= 3)) {
 								System.out.println("Invalid option. Please choose 1-3.");
@@ -209,6 +211,7 @@ public class ATM {
 			System.out.println(" 5) Logout.");
 			System.out.println("Enter choice: ");
 			choice = scanner.nextInt();
+			scanner.nextLine(); // moves cursor to nextLine
 			
 			// print message to user if they chose an invalid choice and tell to try again.
 			if(!(choice >= 1 && choice <= 5)) {

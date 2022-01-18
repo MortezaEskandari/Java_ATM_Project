@@ -72,6 +72,7 @@ public class Account {
 			this.getSummary();
 			System.out.println("Enter amount you want to withdraw: ");
 			withdrawAmount = scanner.nextDouble();
+			scanner.nextLine(); // moves cursor to nextLine
 			
 			if(withdrawAmount > this.balance || withdrawAmount < 0) {
 				System.out.println("Withdraw amount exceeds the account balance or you entered an invalid amount.");
@@ -111,6 +112,7 @@ public class Account {
 			this.getSummary();
 			System.out.println("Enter amount you want to deposit: ");
 			depositAmount = scanner.nextDouble();
+			scanner.nextLine(); // moves cursor to nextLine
 			
 			if(depositAmount <= 0) {
 				System.out.println("Deposit amount entered is either a negative amount or 0, please enter a positive value greater than 0.");
@@ -151,6 +153,7 @@ public class Account {
 			this.getSummary();
 			System.out.println("Enter amount you want to transfer: ");
 			transferAmount = scanner.nextDouble();
+			scanner.nextLine(); // moves cursor to nextLine
 			
 			if(transferAmount > this.balance || transferAmount < 0) {
 				System.out.println("Withdraw amount exceeds the account balance or you entered an invalid amount.");
