@@ -194,18 +194,18 @@ public class Account {
 		String memo = "";
 		
 		// ask User if they want to add a memo for this withdraw
-		String memoOption;
+		char memoOption;
 		do {
 			System.out.println("Would you like to add a memo for this withdraw? (Y or N)");
-			memoOption = scanner.nextLine();
+			memoOption = scanner.next().charAt(0);
 			
-			if(memoOption != "Y" || memoOption != "N" || memoOption != "y" || memoOption != "n") {
+			if(memoOption != 'Y' || memoOption != 'N' || memoOption != 'y' || memoOption != 'n') {
 				System.out.println("Invalid response entered. Please type Y for yes and N for no.");
 			}
-		} while(memoOption != "Y" || memoOption != "N" || memoOption != "y" || memoOption != "n");
+		} while(memoOption != 'Y' || memoOption != 'N' || memoOption != 'y' || memoOption != 'n');
 		
 		// process the memo option chosen if they chose Y or y for yes to add a memo
-		if(memoOption == "Y" || memoOption == "y") {
+		if(memoOption == 'Y' || memoOption == 'y') {
 			System.out.println("Please enter your memo:");
 			memo = scanner.nextLine();
 		}
