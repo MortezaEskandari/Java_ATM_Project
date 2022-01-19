@@ -128,12 +128,13 @@ public class User {
 			accountName = scanner.nextLine();
 			
 			if(!(this.hashAccounts.containsKey(accountName)) || this.hashAccounts.get(accountName).getBalance() <= 0) {
+				
+				// Print to user invalid account type to withdraw, either it doesn't exist or no balance, then display all accounts available to choose from
+				System.out.println("\nThe entered account does not exist or the balance of the account is zero.\nPlease try a different account or go back to the main menu.");
+				this.printAccountsSummary();
+				
 				int option;
 				do {
-					// Print to user invalid account type to withdraw, either it doesn't exist or no balance, then display all accounts available to choose from
-					System.out.println("\n\nThe entered account does not exist or the balance of the account is zero.\nPlease try a different account or go back to the main menu.");
-					this.printAccountsSummary();
-					
 					// Give user options to choose from
 					System.out.println("Choose one of the following options:");
 					System.out.println("1) Try another account.");
@@ -143,7 +144,7 @@ public class User {
 					scanner.nextLine();
 					
 					if(option != 1 && option != 2) {
-						System.out.println("Please select either option 1 or 2.");
+						System.out.println("\nPlease select either option 1 or 2.\n");
 					}
 				} while(option != 1 && option != 2);
 				
@@ -173,7 +174,7 @@ public class User {
 		
 		String accountName;
 		do {
-			System.out.println("Which account do you want to make a deposit to?: ");
+			System.out.print("Which account do you want to make a deposit to?: ");
 			accountName = scanner.nextLine();
 			
 			if(!(this.hashAccounts.containsKey(accountName))) {
@@ -200,7 +201,7 @@ public class User {
 		// Ask user to choose which account they want to transfer FROM
 		String accNameTransFrom;
 		do {
-			System.out.println("Which account do you want to transfer from?: ");
+			System.out.print("Which account do you want to transfer from?: ");
 			accNameTransFrom = scanner.nextLine();
 			
 			if(!(this.hashAccounts.containsKey(accNameTransFrom)) || this.hashAccounts.get(accNameTransFrom).getBalance() <= 0) {
@@ -215,7 +216,7 @@ public class User {
 		// Ask user to choose which account they want to transfer TO
 		String accNameTransTo;
 		do {
-			System.out.println("Which account do you want to transfer to?: ");
+			System.out.print("Which account do you want to transfer to?: ");
 			accNameTransTo = scanner.nextLine();
 			
 			if(!(this.hashAccounts.containsKey(accNameTransTo)) || accNameTransTo == accNameTransFrom) {
@@ -223,7 +224,7 @@ public class User {
 				this.printAccountsSummary();
 				System.out.printf("You are transferring FROM your %s account.", accNameTransFrom);
 			}
-		} while(!(this.hashAccounts.containsKey(accNameTransTo)) || accNameTransTo != accNameTransFrom);
+		} while(!(this.hashAccounts.containsKey(accNameTransTo)) || accNameTransTo == accNameTransFrom);
 		
 		// Get the account object from the ArrayList of accounts that we want to transfer TO
 		Account accTransTo = this.hashAccounts.get(accNameTransTo);
@@ -279,8 +280,9 @@ public class User {
 		// generate the account object
 		Account newAccount = new Account(accountName, this, this.bank);
 		
-		// add it to the list of accounts for this user and for the bank
+		// add it to the list of accounts for this user and for the bank and for the hashmap
 		this.listAccounts.add(newAccount);
+		this.hashAccounts.put(accountName, newAccount);
 		this.bank.addAccount(newAccount);
 	}
 	
@@ -305,7 +307,7 @@ public class User {
 	 */
 	public void printAccountsSummary() {
 		
-		System.out.printf("\n%s's accounts summary\n", this.firstName);
+		System.out.printf("\n%s's Account Summary\n", this.firstName);
 		for(int a = 0; a < this.listAccounts.size(); a++) {
 			System.out.printf("ACCOUNT %d) %s\n", a+1, this.listAccounts.get(a).getSummary());
 		}

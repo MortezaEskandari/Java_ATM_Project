@@ -151,13 +151,13 @@ public class Account {
 		// ask User the amount they want to transfer
 		double transferAmount;
 		do {			
-			this.getSummary();
+			this.printAccount();
 			System.out.print("Enter amount you want to transfer: ");
 			transferAmount = scanner.nextDouble();
 			scanner.nextLine(); // moves cursor to nextLine
 			
 			if(transferAmount > this.balance || transferAmount < 0) {
-				System.out.println("Withdraw amount exceeds the account balance or you entered an invalid amount.");
+				System.out.println("\nWithdraw amount exceeds the account balance or you entered an invalid amount.\n");
 			}
 		} while(transferAmount > this.balance || transferAmount < 0);
 		
@@ -264,7 +264,11 @@ public class Account {
 	 */
 	public String getSummary() {
 		
-		return String.format("UUID : %s | ACCOUNT : %s  |  BALANCE : $%.02f", this.uuid, this.name, this.balance);
+		return String.format("|   UUID : %s   |   ACCOUNT : %s   |   BALANCE : $%.02f   |", this.uuid, this.name, this.balance);
+	}
+	
+	public void printAccount() {
+		System.out.printf("|   UUID : %s   |   ACCOUNT : %s   |   BALANCE : $%.02f   |", this.uuid, this.name, this.balance);
 	}
 
 }

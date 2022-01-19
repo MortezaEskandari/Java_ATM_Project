@@ -23,6 +23,7 @@ public class ATM {
 			System.out.println(" 1) Create a new bank account with a Bank of your choice.");
 			System.out.println(" 2) Login to an existing bank account.");
 			System.out.println(" 3) Quit.");
+			System.out.print("Select option 1-3: ");
 			option = scanner.nextInt();
 			scanner.nextLine(); // moves cursor to nextLine
 			
@@ -30,7 +31,7 @@ public class ATM {
 				System.out.println("Invalid option. Please choose 1-3.");
 			}
 			if(option == 2 && this.banks.isEmpty()) {
-				System.out.println("You currently have no existing accounts in any banks. Please first open an account with a bank.\n");
+				System.out.println("\nYou currently have no existing accounts in any banks. Please first open an account with a bank.");
 				option = 1;
 			}
 		} while(!(option >= 1 && option <= 3));
@@ -51,7 +52,7 @@ public class ATM {
 		
 		case 1:
 			// prompt user to enter which bank they want to create an account with.
-			System.out.print("Enter the name of the Bank you'd like to open an account with: ");
+			System.out.print("\nEnter the name of the Bank you'd like to open an account with: ");
 			String newBankName = scanner.nextLine();
 			
 			// Check if bank already exists in HashMap or not, if yes pull that Bank object out, else create new Bank object and add to HashMap
@@ -73,7 +74,7 @@ public class ATM {
 			// ask for the user to input a unique userID
 			String newUserID;
 			do {
-				System.out.print("Please enter a unique user ID to be used for login to your bank account: ");
+				System.out.print("Create your userID: ");
 				newUserID = scanner.nextLine();
 				
 				if(newBank.existingUserID(newUserID)) {
@@ -85,7 +86,7 @@ public class ATM {
 			String newPin = "";
 			boolean invalidPin = false;
 			do {
-				System.out.print("Enter your 4-digit pin number: ");
+				System.out.print("Create your 4-digit pin number: ");
 				newPin = scanner.nextLine();
 				
 				invalidPin = false;
@@ -114,7 +115,7 @@ public class ATM {
 			// ask user to enter the Bank that their account is located at
 			String bankName;
 			do {
-				System.out.print("Enter the Bank your account is registerd in: ");
+				System.out.print("\nEnter the Bank your account is registerd in: ");
 				bankName = scanner.nextLine();
 				
 				// check if the bank exists in the HashMap for when new accounts are made
@@ -139,8 +140,8 @@ public class ATM {
 				while(loop) {
 					if(sameBank) {
 						do {
-							System.out.println("Invalid userID or pin or account exists in another Bank and not in this one.");
-							System.out.println("Please select an option below.");
+							System.out.println("\nInvalid userID or pin or account exists in another Bank and not in this one.");
+							System.out.println("Please select an option below:");
 							System.out.println(" 1) Try again.");
 							System.out.println(" 2) Choose a different Bank.");
 							System.out.println(" 3) Quit.");

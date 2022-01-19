@@ -69,13 +69,14 @@ public class Transaction {
 	}
 	
 	public void printTransaction() {
+		System.out.println("------------------------------------------------------------------------------------------");
 		System.out.printf("Time of transaction: %s\n", this.timestamp.toString());
 		System.out.printf("Type of transaction: %s\n", this.type);
 		System.out.printf("Transaction amount: %.02f\n", this.amount);
 		System.out.printf("Balance BEFORE transaction: %.02f\n", this.oldBalance);
 		System.out.printf("Balance AFTER transaction: %.02f\n", this.newBalance);
 		System.out.printf("Memo: %s\n", this.memo);
-		System.out.println("------------------------------------------------------------------------------------------");
+		System.out.println("------------------------------------------------------------------------------------------\n");
 	}
 	
 	/**
