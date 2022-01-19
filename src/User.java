@@ -128,10 +128,34 @@ public class User {
 			accountName = scanner.nextLine();
 			
 			if(!(this.hashAccounts.containsKey(accountName)) || this.hashAccounts.get(accountName).getBalance() <= 0) {
-				System.out.println("This account doesn't exist or balance of account is zero or negative. Please try a different account.");
-				this.printAccountsSummary();
+				int option;
+				do {
+					// Print to user invalid account type to withdraw, either it doesn't exist or no balance, then display all accounts available to choose from
+					System.out.println("\n\nThe entered account does not exist or the balance of the account is zero.\nPlease try a different account or go back to the main menu.");
+					this.printAccountsSummary();
+					
+					// Give user options to choose from
+					System.out.println("Choose one of the following options:");
+					System.out.println("1) Try another account.");
+					System.out.println("2) Go back to main menu.");
+					System.out.print("Enter option: ");
+					option = scanner.nextInt();
+					scanner.nextLine();
+					
+					if(option != 1 && option != 2) {
+						System.out.println("Please select either option 1 or 2.");
+					}
+				} while(option != 1 && option != 2);
+				
+				// process the option chosen by user
+				if(option == 1) {
+					this.printAccountsSummary();
+				}
+				else { // has to be option 2, go back to main menu
+					return;
+				}
 			}
-		} while(!(this.hashAccounts.containsKey(accountName)));
+		} while(!(this.hashAccounts.containsKey(accountName)) || this.hashAccounts.get(accountName).getBalance() <= 0);
 		
 		// process the withdraw from the chosen account
 		Account acc = this.hashAccounts.get(accountName);
@@ -219,6 +243,7 @@ public class User {
 		// Ask user which account to show the transaction history of
 		String accountName;
 		do {
+			this.printAccountsSummary();
 			System.out.println("Which account do you want to see the transaction history of?: ");
 			accountName = scanner.nextLine();
 			

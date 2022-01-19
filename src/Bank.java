@@ -91,7 +91,7 @@ public class Bank {
 		
 		// create a savings account for the user and add to User and Bank accounts lists
 		Account newAccount = new Account("Savings", newUser, this);
-		String uuid = newAccount.getUUID();
+		//String uuid = newAccount.getUUID();
 		newUser.addAccount("Savings",newAccount);
 		this.addAccount(newAccount);
 		

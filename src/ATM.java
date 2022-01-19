@@ -29,6 +29,10 @@ public class ATM {
 			if(!(option >= 1 && option <= 3)) {
 				System.out.println("Invalid option. Please choose 1-3.");
 			}
+			if(option == 2 && this.banks.isEmpty()) {
+				System.out.println("You currently have no existing accounts in any banks. Please first open an account with a bank.\n");
+				option = 1;
+			}
 		} while(!(option >= 1 && option <= 3));
 		
 		// process the option with the processLoginOption method, passing the option and scanner
@@ -81,8 +85,7 @@ public class ATM {
 			String newPin = "";
 			boolean invalidPin = false;
 			do {
-				System.out.println("Create your 4-digit pin number to access your new account.");
-				System.out.print("Enter your 4-digit pin: ");
+				System.out.println("Enter your 4-digit pin number: ");
 				newPin = scanner.nextLine();
 				
 				invalidPin = false;
@@ -103,10 +106,11 @@ public class ATM {
 			// add user to the bank system
 			newBank.addUser(firstName, lastName, newUserID, newPin);
 			
-			System.out.printf("Congratulations! Your new bank account with %s Bank is now active and ready for your login.\n", newBankName);
+			System.out.printf("\nCongratulations! Your new bank account with %s Bank is now active and ready for your login.\n\n", newBankName);
 			break;
 			
 		case 2:
+			// Display
 			// ask user to enter the Bank that their account is located at
 			String bankName;
 			do {
@@ -208,8 +212,8 @@ public class ATM {
 			System.out.println(" 2) Withdraw.");
 			System.out.println(" 3) Deposit.");
 			System.out.println(" 4) Transfer.");
-			System.out.println(" 5) Logout.");
-			System.out.println("Enter choice: ");
+			System.out.println(" 5) Logout.\n");
+			System.out.print("Enter choice: ");
 			choice = scanner.nextInt();
 			scanner.nextLine(); // moves cursor to nextLine
 			

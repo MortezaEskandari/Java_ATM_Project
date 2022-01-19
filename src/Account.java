@@ -75,7 +75,8 @@ public class Account {
 			scanner.nextLine(); // moves cursor to nextLine
 			
 			if(withdrawAmount > this.balance || withdrawAmount < 0) {
-				System.out.println("Withdraw amount exceeds the account balance or you entered an invalid amount.");
+				System.out.println("Withdraw amount exceeds the account balance or you entered an invalid amount.\nPlease enter an amount less than or equal to Account balance.");
+				this.getSummary();
 			}
 		} while(withdrawAmount > this.balance || withdrawAmount < 0);
 		
@@ -198,11 +199,12 @@ public class Account {
 		do {
 			System.out.println("Would you like to add a memo for this withdraw? (Y or N)");
 			memoOption = scanner.next().charAt(0);
+			scanner.nextLine();
 			
-			if(memoOption != 'Y' || memoOption != 'N' || memoOption != 'y' || memoOption != 'n') {
+			if(memoOption != 'Y' && memoOption != 'N' && memoOption != 'y' && memoOption != 'n') {
 				System.out.println("Invalid response entered. Please type Y for yes and N for no.");
 			}
-		} while(memoOption != 'Y' || memoOption != 'N' || memoOption != 'y' || memoOption != 'n');
+		} while(memoOption != 'Y' && memoOption != 'N' && memoOption != 'y' && memoOption != 'n');
 		
 		// process the memo option chosen if they chose Y or y for yes to add a memo
 		if(memoOption == 'Y' || memoOption == 'y') {
@@ -218,7 +220,7 @@ public class Account {
 	 */
 	public void printTransactions() {
 		
-		System.out.printf("Transaction history for %s account:\n", this.name);
+		System.out.printf("\nTransaction history for %s account:\n\n", this.name);
 		for(int t = 0; t < this.transactions.size(); t++) {
 			this.transactions.get(t).printTransaction();
 		}
@@ -262,13 +264,7 @@ public class Account {
 	 */
 	public String getSummary() {
 		
-		// format the summary line, depending on whether the balance is negative
-		if(balance >= 0) {
-			return String.format("%s : $%.02f : %s", this.uuid, this.balance, this.name);
-		}
-		else {
-			return String.format("%s : $(%.02f) : %s", this.uuid, balance, this.name);
-		}
+		return String.format("Account Name: %s -- Account UUID: %s -- Balance: $%.02f", this.name, this.uuid, this.balance);
 	}
 
 }
