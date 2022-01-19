@@ -74,7 +74,7 @@ public class Transaction {
 		System.out.printf("Transaction amount: %.02f\n", this.amount);
 		System.out.printf("Balance BEFORE transaction: %.02f\n", this.oldBalance);
 		System.out.printf("Balance AFTER transaction: %.02f\n", this.newBalance);
-		System.out.printf("Memo: %s", this.memo);
+		System.out.printf("Memo: %s\n", this.memo);
 		System.out.println("------------------------------------------------------------------------------------------");
 	}
 	

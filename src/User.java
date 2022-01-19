@@ -124,7 +124,7 @@ public class User {
 		
 		String accountName;
 		do {
-			System.out.println("Which account do you want to make a withdraw from?: ");
+			System.out.print("Which account do you want to make a withdraw from?: ");
 			accountName = scanner.nextLine();
 			
 			if(!(this.hashAccounts.containsKey(accountName)) || this.hashAccounts.get(accountName).getBalance() <= 0) {
@@ -244,7 +244,7 @@ public class User {
 		String accountName;
 		do {
 			this.printAccountsSummary();
-			System.out.println("Which account do you want to see the transaction history of?: ");
+			System.out.print("Which account do you want to see the transaction history of?: ");
 			accountName = scanner.nextLine();
 			
 			if(!(this.hashAccounts.containsKey(accountName))) {
@@ -256,6 +256,32 @@ public class User {
 		// display the transaction history for the chosen account
 		Account acc = this.hashAccounts.get(accountName);
 		acc.printTransactions();
+	}
+	
+	/**
+	 * 
+	 * @param scanner
+	 */
+	public void createAccount(Scanner scanner) {
+		
+		// Ask user the name of the new account
+		String accountName;
+		do {
+			this.printAccountsSummary();
+			System.out.print("Enter new account name: ");
+			accountName = scanner.nextLine();
+			
+			if(this.hashAccounts.containsKey(accountName)) {
+				System.out.println("\nThis account exists. Please enter a unique account name.\n");
+			}
+		} while(this.hashAccounts.containsKey(accountName));
+		
+		// generate the account object
+		Account newAccount = new Account(accountName, this, this.bank);
+		
+		// add it to the list of accounts for this user and for the bank
+		this.listAccounts.add(newAccount);
+		this.bank.addAccount(newAccount);
 	}
 	
 	/**
@@ -279,9 +305,9 @@ public class User {
 	 */
 	public void printAccountsSummary() {
 		
-		System.out.printf("\n\n%s's accounts summary\n", this.firstName);
+		System.out.printf("\n%s's accounts summary\n", this.firstName);
 		for(int a = 0; a < this.listAccounts.size(); a++) {
-			System.out.printf("%d) %s\n", a+1, this.listAccounts.get(a).getSummary());
+			System.out.printf("ACCOUNT %d) %s\n", a+1, this.listAccounts.get(a).getSummary());
 		}
 		System.out.println();
 	}

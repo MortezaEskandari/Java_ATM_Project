@@ -77,7 +77,7 @@ public class ATM {
 				newUserID = scanner.nextLine();
 				
 				if(newBank.existingUserID(newUserID)) {
-					System.out.println("This user ID already exists, please try something else.");
+					System.out.println("\nThis user ID already exists, please try something else.\n");
 				}
 			} while(newBank.existingUserID(newUserID));
 			
@@ -85,7 +85,7 @@ public class ATM {
 			String newPin = "";
 			boolean invalidPin = false;
 			do {
-				System.out.println("Enter your 4-digit pin number: ");
+				System.out.print("Enter your 4-digit pin number: ");
 				newPin = scanner.nextLine();
 				
 				invalidPin = false;
@@ -212,17 +212,18 @@ public class ATM {
 			System.out.println(" 2) Withdraw.");
 			System.out.println(" 3) Deposit.");
 			System.out.println(" 4) Transfer.");
-			System.out.println(" 5) Logout.\n");
+			System.out.println(" 5) Create New Account");
+			System.out.println(" 6) Logout.\n");
 			System.out.print("Enter choice: ");
 			choice = scanner.nextInt();
 			scanner.nextLine(); // moves cursor to nextLine
 			
 			// print message to user if they chose an invalid choice and tell to try again.
-			if(!(choice >= 1 && choice <= 5)) {
-				System.out.println("Invalid choice. Please choose 1-5.");
+			if(!(choice >= 1 && choice <= 6)) {
+				System.out.println("Invalid choice. Please choose 1-6.");
 			}
 			
-		} while(!(choice >= 1 && choice <= 5)); // continue to loop until a valid choice is given by user
+		} while(!(choice >= 1 && choice <= 6)); // continue to loop until a valid choice is given by user
 		
 		processUserChoice(choice, bankName, bank, user, userID, pin, scanner);
 	}
@@ -245,11 +246,13 @@ public class ATM {
 			user.transferFunds(scanner);
 			break;
 		case 5:
-			System.out.println("Logging out...");
+			user.createAccount(scanner);
+		case 6:
+			System.out.println("\nLogging out of account...\n");
 			break;
 		}
 		
-		if(choice != 5) {
+		if(choice != 6) {
 			printUserMenu(bankName, bank, user, userID, pin, scanner);
 		}
 	}

@@ -70,7 +70,7 @@ public class Account {
 		double withdrawAmount;
 		do {			
 			this.getSummary();
-			System.out.println("Enter amount you want to withdraw: ");
+			System.out.print("Enter amount you want to withdraw: ");
 			withdrawAmount = scanner.nextDouble();
 			scanner.nextLine(); // moves cursor to nextLine
 			
@@ -111,7 +111,7 @@ public class Account {
 		double depositAmount;
 		do {			
 			this.getSummary();
-			System.out.println("Enter amount you want to deposit: ");
+			System.out.print("Enter amount you want to deposit: ");
 			depositAmount = scanner.nextDouble();
 			scanner.nextLine(); // moves cursor to nextLine
 			
@@ -152,7 +152,7 @@ public class Account {
 		double transferAmount;
 		do {			
 			this.getSummary();
-			System.out.println("Enter amount you want to transfer: ");
+			System.out.print("Enter amount you want to transfer: ");
 			transferAmount = scanner.nextDouble();
 			scanner.nextLine(); // moves cursor to nextLine
 			
@@ -197,7 +197,7 @@ public class Account {
 		// ask User if they want to add a memo for this withdraw
 		char memoOption;
 		do {
-			System.out.println("Would you like to add a memo for this withdraw? (Y or N)");
+			System.out.print("Would you like to add a memo for this withdraw? (Y or N): ");
 			memoOption = scanner.next().charAt(0);
 			scanner.nextLine();
 			
@@ -264,7 +264,7 @@ public class Account {
 	 */
 	public String getSummary() {
 		
-		return String.format("Account Name: %s -- Account UUID: %s -- Balance: $%.02f", this.name, this.uuid, this.balance);
+		return String.format("UUID : %s | ACCOUNT : %s  |  BALANCE : $%.02f", this.uuid, this.name, this.balance);
 	}
 
 }
