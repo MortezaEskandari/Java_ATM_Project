@@ -20,8 +20,8 @@ public class ATM {
 		int option;
 		System.out.println("Welcome to the ATM, please select an option below.");
 		do {
-			System.out.println(" 1) Create a new bank account with a Bank of your choice.");
-			System.out.println(" 2) Login to an existing bank account.");
+			System.out.println(" 1) Login.");
+			System.out.println(" 2) Create account.");
 			System.out.println(" 3) Quit.");
 			System.out.print("Select option 1-3: ");
 			option = scanner.nextInt();
@@ -30,172 +30,183 @@ public class ATM {
 			if(!(option >= 1 && option <= 3)) {
 				System.out.println("Invalid option. Please choose 1-3.");
 			}
-			if(option == 2 && this.banks.isEmpty()) {
-				System.out.println("\nYou currently have no existing accounts in any banks. Please first open an account with a bank.");
-				option = 1;
-			}
 		} while(!(option >= 1 && option <= 3));
 		
-		// process the option with the processLoginOption method, passing the option and scanner
-		processLoginOption(option, scanner);
+		// Process the option chosen by the user
+		if(option == 1) {
+			loginATM(scanner);
+		}
+		else if(option == 2) {
+			createAccount(scanner);
+		}
+		else if(option == 3) {
+			System.out.println("Quitting Application . . .");
+		}
 	}
 	
-	/**
-	 * Processes the option chosen in the loginPrompt method
-	 * @param option	the option chosen in loginPrompt method
+	/*
+	 * Method used to login to the ATM and gain access to User Account
+	 * User will input which bank they are using
+	 * User will input their login credentials (user ID + pin)
 	 * @param scanner	the scanner object for getting user input
 	 */
-	public void processLoginOption(int option, Scanner scanner) {
+	public void loginATM(Scanner scanner) {
 		
-		// process the option
-		switch(option) {
+		boolean enterBank = true;	// Boolean condition for asking user to enter bank name or not
+		String bankName = "";	// Store bank name given by user input
+		String userID = "";	// Store user ID given by user input
+		String pin = "";	// Store 4 digit pin given by user input
+		int option = 1; // Used to get user input
 		
-		case 1:
-			// prompt user to enter which bank they want to create an account with.
-			System.out.print("\nEnter the name of the Bank you'd like to open an account with: ");
-			String newBankName = scanner.nextLine();
-			
-			// Check if bank already exists in HashMap or not, if yes pull that Bank object out, else create new Bank object and add to HashMap
-			Bank newBank;
-			if(this.banks.containsKey(newBankName)) {
-				newBank = this.banks.get(newBankName);
-			}
-			else {
-				newBank = new Bank(newBankName);
-				this.banks.put(newBankName, newBank);
+		// Ask user to enter bank name Account is located at and login credentials (user ID + pin) to login
+		do {
+			// Ask user to enter bank their account is located at
+			if(enterBank) {
+				System.out.print("\nEnter bank name: ");
+				bankName = scanner.nextLine();
 			}
 			
-			// ask for user's first and last name
-			System.out.print("Enter your first name: ");
-			String firstName = scanner.nextLine();
-			System.out.print("Enter your last name: ");
-			String lastName = scanner.nextLine();
+			// Ask for user ID
+			System.out.print("Enter user ID: ");
+			userID = scanner.nextLine();
 			
-			// ask for the user to input a unique userID
-			String newUserID;
+			// Ask for 4-digit pin, loop until valid 4 digit pin
+			boolean invalidPin = false; // used for the loop, set true when invalid pin entered, false when valid
 			do {
-				System.out.print("Create your userID: ");
-				newUserID = scanner.nextLine();
-				
-				if(newBank.existingUserID(newUserID)) {
-					System.out.println("\nThis user ID already exists, please try something else.\n");
-				}
-			} while(newBank.existingUserID(newUserID));
-			
-			// ask for user pin number
-			String newPin = "";
-			boolean invalidPin = false;
-			do {
-				System.out.print("Create your 4-digit pin number: ");
-				newPin = scanner.nextLine();
+				System.out.print("Enter 4-digit pin: ");
+				pin = scanner.nextLine();
 				
 				invalidPin = false;
-		        try{
-		            int intPin = Integer.parseInt(newPin);
-		            if(newPin.length() != 4 || intPin >= 10000 || intPin < 0) {
-		            	System.out.println("Invalid pin number. Please enter only 1 digit number per digit. Example pin (1234,0000,4321).");
+				try{
+		            int intPin = Integer.parseInt(pin);
+		            if(pin.length() != 4 || intPin >= 10000 || intPin < 0) {
+		            	System.out.println("\nInvalid pin number. Please enter only 1 digit number per digit. Example pin (1234,0000,4321).\n");
 		            	invalidPin = true;
 		            }
 		        }
 		        catch (NumberFormatException ex){
-		            System.out.println("The pin you entered was invalid. Make sure to only enter a 4-digit pin. Each digit is a number between 0-9.");
+		            System.out.println("\nThe pin you entered was invalid. Make sure to only enter a 4-digit pin. Each digit is a number between 0-9.\n");
 		            invalidPin = true;
 		        }
-				
 			} while(invalidPin);
 			
-			// add user to the bank system
-			newBank.addUser(firstName, lastName, newUserID, newPin);
-			
-			System.out.printf("\nCongratulations! Your new bank account with %s Bank is now active and ready for your login.\n\n", newBankName);
-			break;
-			
-		case 2:
-			// Display
-			// ask user to enter the Bank that their account is located at
-			String bankName;
-			do {
-				System.out.print("\nEnter the Bank your account is registerd in: ");
-				bankName = scanner.nextLine();
+			// Check if Account exists in Bank, Enter statement if Bank object doesn't exist or if Bank object exists but Account doesn't
+			if(this.banks.get(bankName) == null || this.banks.get(bankName).existingUserID(userID) == false) {
+				System.out.printf("\nAccount doesn't exist with %s bank.\n\n", bankName);
 				
-				// check if the bank exists in the HashMap for when new accounts are made
-				if(!(this.banks.containsKey(bankName))) {
-					System.out.printf("No accounts exists in %s Bank, please try again. Make sure to enter the Bank your account is registered in.\n", bankName);
-				}
-			} while(!(this.banks.containsKey(bankName)));
-			
-			Bank bank = this.banks.get(bankName);
-			
-			// ask user to enter their user ID and pin to login to their account
-			System.out.print("Enter userID: ");
-			String userID = scanner.nextLine();
-			System.out.print("Enter pin: ");
-			String pin = scanner.nextLine();
-		
-			// if user ID or pin is invalid, ask the user some options
-			User user = bank.userLogin(userID, pin);
-			if(user == null) {
-				boolean loop = true;
-				boolean sameBank = true;
-				while(loop) {
-					if(sameBank) {
-						do {
-							System.out.println("\nInvalid userID or pin or account exists in another Bank and not in this one.");
-							System.out.println("Please select an option below:");
-							System.out.println(" 1) Try again.");
-							System.out.println(" 2) Choose a different Bank.");
-							System.out.println(" 3) Quit.");
-							option = scanner.nextInt();
-							scanner.nextLine(); // moves cursor to nextLine
-							
-							if(!(option >= 1 && option <= 3)) {
-								System.out.println("Invalid option. Please choose 1-3.");
-							}
-						} while(!(option >= 1 && option <= 3));
-					}
+				// Loop until user chooses an option 1-3 to proceed
+				do {
+					System.out.println("1) Try again.");
+					System.out.println("2) Go back to menu.");
+					System.out.println("3) Quit.");
+					System.out.print("Select option 1-3: ");
+					option = scanner.nextInt();
+					scanner.nextLine(); // moves cursor to nextLine
+					enterBank = true; // If user chooses option 1 to try again, ask user to enter bankName again + userID + pin
 					
-					if(option == 1) {
-						System.out.print("Enter userID: ");
-						userID = scanner.nextLine();
-						System.out.print("Enter pin: ");
-						pin = scanner.nextLine();
-						user = bank.userLogin(userID, pin);
-						if(user != null) {
-							loop = false;
-						}
-						sameBank = true;
+					if(!(option >= 1 && option <= 3)) {
+						System.out.println("Invalid option. Please choose 1-3.");
 					}
-					else if(option == 2) {
-						do {
-							System.out.print("Enter the Bank your account is registerd in: ");
-							bankName = scanner.nextLine();
-							
-							// check if the bank exists in the HashMap for when new accounts are made
-							if(!(this.banks.containsKey(bankName))) {
-								System.out.printf("No accounts exists in %s Bank, please try again. Make sure to enter the Bank your account is registered in.\n", bankName);
-							}
-						} while(!(this.banks.containsKey(bankName)));
-						
-						bank = this.banks.get(bankName);
-						sameBank = false;
-						option = 1;
-					}
-					else {
-						System.out.println("Quitting Application...");
-						System.exit(1);
-					}
-				}
+				} while(!(option >= 1 && option <= 3));
 			}
-			this.printUserMenu(bankName, bank, user, userID, pin, scanner);
-			break;
+			else if(this.banks.get(bankName).userLogin(userID, pin) == null) {
+				System.out.println("Invalid user ID or pin.");
+				
+				do {
+					System.out.println("1) Try again.");
+					System.out.println("2) Go back to menu.");
+					System.out.println("3) Quit.");
+					System.out.print("Select option 1-3: ");
+					option = scanner.nextInt();
+					scanner.nextLine(); // moves cursor to nextLine
+					enterBank = false; // If user chooses option 1 to try again, don't ask user to enter bankName again, just userID + pin
+					
+					if(!(option >= 1 && option <= 3)) {
+						System.out.println("Invalid option. Please choose 1-3.");
+					}
+				} while(!(option >= 1 && option <= 3));
+			}
+			else { // Enter this statement if Account exists and proper login credentials given
+				User user = this.banks.get(bankName).userLogin(userID, pin);
+				this.printUserMenu(bankName, this.banks.get(bankName), user, userID, pin, scanner);
+				option = 2;
+			}
 			
-		case 3:
-			System.out.println("Quitting Application...");
-			System.exit(1);
+			if(option == 3) {
+				System.out.println("Quitting Application . . .");
+			}
+			else if(option == 2) {
+				System.out.println();
+				this.loginPrompt();
+			}
+		} while(option == 1);
+	}
+	
+	/**
+	 * Create a new Account for Logging into the ATM and bank
+	 * @param scanner	the scanner object for getting user input
+	 */
+	public void createAccount(Scanner scanner) {
+		
+		// prompt user to enter which bank they want to create an account with.
+		System.out.print("\nEnter the name of the Bank you'd like to open an account with: ");
+		String newBankName = scanner.nextLine();
+		
+		// Check if bank already exists in HashMap or not, if yes pull that Bank object out, else create new Bank object and add to HashMap
+		Bank newBank;
+		if(this.banks.containsKey(newBankName)) {
+			newBank = this.banks.get(newBankName);
+		}
+		else {
+			newBank = new Bank(newBankName);
+			this.banks.put(newBankName, newBank);
 		}
 		
-		loginPrompt();
+		// ask for user's first and last name
+		System.out.print("Enter your first name: ");
+		String firstName = scanner.nextLine();
+		System.out.print("Enter your last name: ");
+		String lastName = scanner.nextLine();
 		
+		// ask for the user to input a unique userID
+		String newUserID;
+		do {
+			System.out.print("Create your userID: ");
+			newUserID = scanner.nextLine();
+			
+			if(newBank.existingUserID(newUserID)) {
+				System.out.println("\nThis user ID already exists, please try something else.\n");
+			}
+		} while(newBank.existingUserID(newUserID));
+		
+		// ask for user pin number
+		String newPin = "";
+		boolean invalidPin = false;
+		do {
+			System.out.print("Create your 4-digit pin number: ");
+			newPin = scanner.nextLine();
+			
+			invalidPin = false;
+	        try{
+	            int intPin = Integer.parseInt(newPin);
+	            if(newPin.length() != 4 || intPin >= 10000 || intPin < 0) {
+	            	System.out.println("Invalid pin number. Please enter only 1 digit number per digit. Example pin (1234,0000,4321).");
+	            	invalidPin = true;
+	            }
+	        }
+	        catch (NumberFormatException ex){
+	            System.out.println("The pin you entered was invalid. Make sure to only enter a 4-digit pin. Each digit is a number between 0-9.");
+	            invalidPin = true;
+	        }
+			
+		} while(invalidPin);
+		
+		// add user to the bank system
+		newBank.addUser(firstName, lastName, newUserID, newPin);
+		
+		System.out.printf("\nCongratulations! Your new bank account with %s Bank is now active and ready for your login.\n\n", newBankName);	
+			
+		this.loginPrompt();
 	}
 	
 	public void printUserMenu(String bankName, Bank bank, User user, String userID, String pin, Scanner scanner) {

@@ -150,9 +150,12 @@ public class Account {
 		
 		// ask User the amount they want to transfer
 		double transferAmount;
-		do {			
+		do {
+			System.out.print("\nTransferring FROM:\t");
 			this.printAccount();
-			System.out.print("Enter amount you want to transfer: ");
+			System.out.print("Transferring TO:\t");
+			accTransTo.printAccount();
+			System.out.print("\nEnter amount you want to transfer: ");
 			transferAmount = scanner.nextDouble();
 			scanner.nextLine(); // moves cursor to nextLine
 			
@@ -268,7 +271,7 @@ public class Account {
 	}
 	
 	public void printAccount() {
-		System.out.printf("|   UUID : %s   |   ACCOUNT : %s   |   BALANCE : $%.02f   |", this.uuid, this.name, this.balance);
+		System.out.printf("|   UUID : %s   |   ACCOUNT : %s   |   BALANCE : $%.02f   |\n", this.uuid, this.name, this.balance);
 	}
 
 }
