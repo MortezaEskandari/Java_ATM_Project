@@ -190,12 +190,12 @@ public class ATM {
 	        try{
 	            int intPin = Integer.parseInt(newPin);
 	            if(newPin.length() != 4 || intPin >= 10000 || intPin < 0) {
-	            	System.out.println("Invalid pin number. Please enter only 1 digit number per digit. Example pin (1234,0000,4321).");
+	            	System.out.println("\nInvalid pin number. Please enter only 1 digit number per digit. Example pin (1234,0000,4321).\n");
 	            	invalidPin = true;
 	            }
 	        }
 	        catch (NumberFormatException ex){
-	            System.out.println("The pin you entered was invalid. Make sure to only enter a 4-digit pin. Each digit is a number between 0-9.");
+	            System.out.println("\nThe pin you entered was invalid. Make sure to only enter a 4-digit pin. Each digit is a number between 0-9.\n");
 	            invalidPin = true;
 	        }
 			
